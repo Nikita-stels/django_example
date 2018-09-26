@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category List</title>
+</head>
+<body>
+<ul>
+    {% for cat in root_cats %}
+        {% include "test_work/category_tree.html" %}
+    {% endfor %}
+</ul>
+<form method="post">
+    {% csrf_token %}
+    <select name="parent">
+        <option value="">Выберите категорию</option>
+        {% for i in all_cats %}
+            <option value="{{ i.id }}">{{ i.name }}</option>
+        {% endfor %}
+    </select>
+    <input type="text" name="name" required>
+    <button type="submit">Создать</button>
+</form>
+</body>
+</html>

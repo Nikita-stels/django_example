@@ -1,0 +1,16 @@
+<li>
+    {% if cat.id == category.id %}
+        <span><a style="color: red;" href="category?id={{ cat.id }}">{{ cat.name }}</a></span>
+    {% else %}
+        <span><a href="category?id={{ cat.id }}">{{ cat.name }}</a></span>
+    {% endif %}
+    {% if cat.category_set.all %}
+        <ul>
+            {% for ch in cat.category_set.all %}
+                {% with cat=ch template_name="test_work/category_tree.html" %}
+                    {% include template_name %}
+                {% endwith %}
+            {% endfor %}
+        </ul>
+    {% endif %}
+</li>

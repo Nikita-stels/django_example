@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Category Page</title>
+</head>
+<body>
+<a href="../">Назад</a>
+<p>Страница категории {{ category.name }}</p>
+<ul>
+    {% for cat in root_cats %}
+        {% include "test_work/category_tree.html" %}
+    {% endfor %}
+</ul>
+<form method="post">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ category.id }}">
+    <input type="text" name="name" value="{{ category.name }}" required>
+    <button type="submit">Сохранить изменение</button>
+</form>
+<button type="button" onclick="delete_category()">Удалить категорию</button>
+{% load static %}
+<script src="{% static 'js/jquery-3.3.1.min.js' %}"></script>
+<script>
+    function delete_category() {
+        $.ajax({
+            method: 'GET',
+            url: 'delete?id={{ category.id }}',
+            datatype: 'html',
+            success: function (data) {
+                if (data['status'] == true) {
+                    window.location.href = '../'
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>
